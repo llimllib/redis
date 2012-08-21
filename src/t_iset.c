@@ -435,13 +435,20 @@ int avlRemoveNode(avl * tree, avlNode *locNode, avlNode *delNode, char freeNodeM
             if (locNode->left)  locNode->left->parent = replacementNode;
 
             replacementNode->balance = locNode->balance;
-            if (locNode->parent) {
+
+            //Now replace the tree's root with replacementNode if it's the root
+            //otherwise place the replacement under the parent
+            if (locNode == tree->root) {
+                tree->root = replacementNode;
+            }
+            else {
                 avlUpdateMaxScores(locNode->parent);
                 if (locNode == locNode->parent->left)
                     locNode->parent->left = replacementNode;
                 else
                     locNode->parent->right = replacementNode;
             }
+
             locNode->left = NULL;
             locNode->right = NULL;
             if (freeNodeMem)
