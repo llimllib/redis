@@ -182,9 +182,9 @@ start_server {tags {"iset"}} {
         #   4      7
         #         6 8
         r iadd itmp 5 10 5
-        r iadd itmp 6 10 6
         r iadd itmp 4 10 4
         r iadd itmp 7 10 7
+        r iadd itmp 6 10 6
         r iadd itmp 8 10 8
 
         assert_equal {1} [r irem itmp 7]
