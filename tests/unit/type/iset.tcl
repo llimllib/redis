@@ -212,6 +212,48 @@ start_server {tags {"iset"}} {
         assert_equal_elements {4} [r istab itmp 4.5]
     }
 
+    test "ISET Removing left child with >1 layer children" {
+        r del itmp
+        #       7
+        #    4     8
+        #  3   6     9
+        #     5
+        r iadd itmp 7 10 7
+        r iadd itmp 8 10 8
+        r iadd itmp 4 10 4
+        r iadd itmp 3 10 3
+        r iadd itmp 6 10 6
+        r iadd itmp 9 10 9
+        r iadd itmp 5 10 5
+
+        assert_equal {1} [r irem itmp 4]
+
+        assert_equal_elements {3 5 6 7 8 9} [r istab itmp 9]
+        assert_equal_elements {} [r istab itmp 2]
+        assert_equal_elements {3} [r istab itmp 3.5]
+    }
+
+    test "ISET Removing right child with >1 layer children" {
+        r del itmp
+        #       5
+        #    4      7
+        #  3      6   9
+        #            8
+        r iadd itmp 5 10 5
+        r iadd itmp 4 10 4
+        r iadd itmp 7 10 7
+        r iadd itmp 3 10 3
+        r iadd itmp 6 10 6
+        r iadd itmp 9 10 9
+        r iadd itmp 8 10 8
+
+        assert_equal {1} [r irem itmp 7]
+
+        assert_equal_elements {3 4 5 6 8 9} [r istab itmp 9]
+        assert_equal_elements {} [r istab itmp 2]
+        assert_equal_elements {3} [r istab itmp 3.5]
+    }
+
     test "ISET adding multiple keys to a node then deleting one" {
         r del itmp
         r iadd itmp 1 3 x
