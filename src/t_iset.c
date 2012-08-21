@@ -428,8 +428,12 @@ int avlRemoveNode(avl * tree, avlNode *locNode, avlNode *delNode, char freeNodeM
             heightDelta = avlRemoveNode(tree, locNode,replacementNode,0,removed);
             replacementNode->left = locNode->left;
             replacementNode->right = locNode->right;
-            locNode->right->parent = replacementNode;
-            locNode->left->parent = replacementNode;
+
+            //if the replacement node is a direct child of locNode,
+            //don't set it up to point to itself
+            if (locNode->right) locNode->right->parent = replacementNode;
+            if (locNode->left)  locNode->left->parent = replacementNode;
+
             replacementNode->balance = locNode->balance;
             if (locNode->parent) {
                 avlUpdateMaxScores(locNode->parent);

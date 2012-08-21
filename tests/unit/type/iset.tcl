@@ -189,7 +189,7 @@ start_server {tags {"iset"}} {
 
         assert_equal {1} [r irem itmp 7]
 
-        assert_equal_elements {4 5 7 8} [r istab itmp 9]
+        assert_equal_elements {4 5 6 8} [r istab itmp 9]
         assert_equal_elements {} [r istab itmp 3]
         assert_equal_elements {4} [r istab itmp 4.5]
     }
@@ -207,7 +207,7 @@ start_server {tags {"iset"}} {
 
         assert_equal {1} [r irem itmp 5]
 
-        assert_equal_elements {4 5 7 8} [r istab itmp 9]
+        assert_equal_elements {4 6 7 8} [r istab itmp 9]
         assert_equal_elements {} [r istab itmp 3]
         assert_equal_elements {4} [r istab itmp 4.5]
     }
