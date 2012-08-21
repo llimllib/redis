@@ -176,6 +176,42 @@ start_server {tags {"iset"}} {
         assert_equal_elements {300_400} [r istab itmp 350]
     }
 
+    test "ISET Removing right child with children" {
+        r del itmp
+        #      5
+        #   4      7
+        #         6 8
+        r iadd itmp 5 10 5
+        r iadd itmp 6 10 6
+        r iadd itmp 4 10 4
+        r iadd itmp 7 10 7
+        r iadd itmp 8 10 8
+
+        assert_equal {1} [r irem itmp 7]
+
+        assert_equal_elements {4 5 7 8} [r istab itmp 9]
+        assert_equal_elements {} [r istab itmp 3]
+        assert_equal_elements {4} [r istab itmp 4.5]
+    }
+
+    test "ISET Removing left child with children" {
+        r del itmp
+        #      7
+        #   5      8
+        #  4 6
+        r iadd itmp 7 10 7
+        r iadd itmp 8 10 8
+        r iadd itmp 5 10 5
+        r iadd itmp 4 10 4
+        r iadd itmp 6 10 6
+
+        assert_equal {1} [r irem itmp 5]
+
+        assert_equal_elements {4 5 7 8} [r istab itmp 9]
+        assert_equal_elements {} [r istab itmp 3]
+        assert_equal_elements {4} [r istab itmp 4.5]
+    }
+
     test "ISET adding multiple keys to a node then deleting one" {
         r del itmp
         r iadd itmp 1 3 x
