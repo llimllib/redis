@@ -143,6 +143,19 @@ start_server {tags {"iset"}} {
         assert_equal {1} [r irem itmp x]
         assert_error "*no*such*key" {r istab itmp 2}
     }
+
+    test "ISET IREM simple rem" {
+        r del itmp
+        #  2
+        # 1 3
+        r iadd itmp 1 10 1
+        r iadd itmp 2 10 2
+        r iadd itmp 3 10 3
+
+        assert_equal {1} [r irem itmp 2]
+
+        assert_equal_elements {1 3} [r istab itmp 9]
+    }
     
     test "ISET IREM complex" {
         r del itmp
