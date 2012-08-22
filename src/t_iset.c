@@ -426,14 +426,15 @@ int avlRemoveNode(avl * tree, avlNode *locNode, avlNode *delNode, char freeNodeM
 
             // Remove the replacementNode from the tree
             heightDelta = avlRemoveNode(tree, locNode,replacementNode,0,removed);
-            replacementNode->left = locNode->left;
-            replacementNode->right = locNode->right;
 
             //if the replacement node is a direct child of locNode,
             //don't set it up to point to itself
             if (locNode->right) locNode->right->parent = replacementNode;
             if (locNode->left)  locNode->left->parent = replacementNode;
 
+            replacementNode->left = locNode->left;
+            replacementNode->right = locNode->right;
+            replacementNode->parent = locNode->parent;
             replacementNode->balance = locNode->balance;
 
             //Now replace the tree's root with replacementNode if it's the root
