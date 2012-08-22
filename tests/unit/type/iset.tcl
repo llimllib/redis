@@ -209,8 +209,8 @@ start_server {tags {"iset"}} {
         r irem itmp 16_42
 
         #   9_37
-        #3_30 16_42
-        assert_equal_elements {3_30 9_37 16_42} [r istab itmp 21]
+        #3_30
+        assert_equal_elements {3_30 9_37} [r istab itmp 21]
     }
 
     test "ISET Removing right child with children" {
