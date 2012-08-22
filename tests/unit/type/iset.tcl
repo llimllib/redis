@@ -156,6 +156,22 @@ start_server {tags {"iset"}} {
 
         assert_equal_elements {1 3} [r istab itmp 9]
     }
+
+    test "ISET IREM parent error" {
+        r del itmp
+        #     2
+        #   1   4
+        #      3
+        r iadd itmp 2 2 2
+        r iadd itmp 1 1 1
+        r iadd itmp 4 4 4
+        r iadd itmp 3 3 3
+        assert_equal {1} [r irem itmp 4]
+        assert_equal {1} [r irem itmp 2]
+        assert_equal {1} [r irem itmp 3]
+
+        assert_equal {1} [r istab itmp 1]
+    }
     
     test "ISET IREM complex" {
         r del itmp
