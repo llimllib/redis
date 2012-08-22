@@ -389,6 +389,7 @@ int avlRemoveNode(avl * tree, avlNode *locNode, avlNode *delNode, char freeNodeM
                     return -1;
                 }
                 avlRemoveFromParent(tree,locNode,locNode->right);
+                locNode->right->parent = locNode->parent;
                 if (locNode->parent)
                     avlUpdateMaxScores(locNode->parent);
                 locNode->right = NULL;
@@ -399,6 +400,7 @@ int avlRemoveNode(avl * tree, avlNode *locNode, avlNode *delNode, char freeNodeM
             }
             if (!locNode->right) {
                 avlRemoveFromParent(tree,locNode,locNode->left);
+                locNode->left->parent = locNode->parent;
                 if (locNode->parent)
                     avlUpdateMaxScores(locNode->parent);
                 locNode->left = NULL;
