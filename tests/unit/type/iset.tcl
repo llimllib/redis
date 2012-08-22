@@ -189,6 +189,30 @@ start_server {tags {"iset"}} {
         assert_equal_elements {300_400} [r istab itmp 350]
     }
 
+    test "ISET a sequence that failed" {
+        r del itmp
+        r iadd itmp 10 17 10_17
+        r irem itmp 10_17
+        r iadd itmp 46 49 46_49
+        r iadd itmp 3 45 3_45
+        r irem itmp 3_45
+        r irem itmp 46_49
+        r iadd itmp 9 14 9_14
+        r iadd itmp 17 31 17_31
+        r iadd itmp 16 42 16_42
+        r irem itmp 17_31
+        r iadd itmp 3 30 3_30
+        r iadd itmp 1 48 1_48
+        r irem itmp 1_48
+        r iadd itmp 9 37 9_37
+        r irem itmp 9_14
+        r irem itmp 16_42
+
+        #   9_37
+        #3_30 16_42
+        assert_equal_elements {3_30 9_37 16_42} [r istab itmp 21]
+    }
+
     test "ISET Removing right child with children" {
         r del itmp
         #      5
