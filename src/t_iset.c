@@ -757,7 +757,7 @@ void genericStabCommand(redisClient *c, robj *lscoreObj, robj *rscoreObj, int in
         return;
     }
 
-    if ((iobj = lookupKeyReadOrReply(c,key,shared.nokeyerr)) == NULL ||
+    if ((iobj = lookupKeyReadOrReply(c,key,shared.emptymultibulk)) == NULL ||
         checkType(c,iobj,REDIS_ISET)) return;
 
     tree = (avl *) (iobj->ptr);
