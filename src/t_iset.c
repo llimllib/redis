@@ -84,8 +84,7 @@ void avlLeftRotation(avl * tree, avlNode *locNode) {
     avlNode *newRoot = locNode->right;
     locNode->right = newRoot->left;
     newRoot->left = locNode;
-    if (locNode->right)
-        locNode->right->parent = locNode;
+
     newRoot->parent = locNode->parent;
     locNode->parent = newRoot;
     if (newRoot->parent) {
@@ -104,8 +103,7 @@ void avlRightRotation(avl * tree, avlNode *locNode) {
     avlNode *newRoot = locNode->left;
     locNode->left = newRoot->right;
     newRoot->right = locNode;
-    if (locNode->left)
-        locNode->left->parent = locNode;
+
     newRoot->parent = locNode->parent;
     locNode->parent = newRoot;
     if (newRoot->parent) {
@@ -186,29 +184,20 @@ int avlInsertNode(avl * tree, avlNode *locNode, avlNode *insertNode) {
                     return 1;
 
                 // Tree is unbalanced at this point
+                // Case 1 at http://www.stanford.edu/~blp/avl/libavl.html/Rebalancing-AVL-Trees.html#index-rebalance-after-AVL-insertion-236
                 if (locNode->left->balance < 0) {
                     // Left-Left, single right rotation needed
                     avlRightRotation(tree,locNode);
-                    // Update locNode balance
-                    if (locNode->left) {
-                        if (locNode->right) {
-                            locNode->balance = locNode->left->balance + locNode->right->balance;
-                        }
-                        else {
-                            locNode->balance = locNode->left->balance - 1;
-                        }
-                    } else if (locNode->right) {
-                        locNode->balance = locNode->right->balance + 1;
-                    }
-                    else {
-                        locNode->balance = 0;
-                    }
-                    
-                    if (locNode->right)
-                        locNode->right->balance = 0;
+
+                    //Both locNode and its parent have a zero balance; see note at the link above
+                    locNode->balance = 0;
                     locNode->parent->balance = 0;
-                    
+
+                    //XXX: What if locNode->subRightMax > locNode->subLeftMax?
                     locNode->subLeftMax = locNode->parent->subRightMax;
+                    //XXX: What is this, I don't even?
+                    //     locNode->parent->subRightMax should be the max of the subtree
+                    //     *rooted at locNode*, right?
                     locNode->parent->subRightMax = -INFINITY;
                 }
                 else {
@@ -251,23 +240,7 @@ int avlInsertNode(avl * tree, avlNode *locNode, avlNode *insertNode) {
                     // Right-Right, single left rotation needed
                     avlLeftRotation(tree,locNode);
 
-                    // Update locNode balance
-                    if (locNode->left) {
-                        if (locNode->right) {
-                            locNode->balance = locNode->left->balance + locNode->right->balance;
-                        }
-                        else {
-                            locNode->balance = locNode->left->balance - 1;
-                        }
-                    } else if (locNode->right) {
-                        locNode->balance = locNode->right->balance + 1;
-                    }
-                    else {
-                        locNode->balance = 0;
-                    }
-                    
-                    if (locNode->left)
-                        locNode->left->balance = 0;
+                    locNode->balance = 0;
                     locNode->parent->balance = 0;
 
                     locNode->subRightMax = locNode->parent->subLeftMax;
