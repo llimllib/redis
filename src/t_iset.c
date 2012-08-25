@@ -193,7 +193,6 @@ int avlInsertNode(avl * tree, avlNode *locNode, avlNode *insertNode) {
                     locNode->balance = 0;
                     locNode->parent->balance = 0;
 
-                    //XXX: What if locNode->subRightMax > locNode->subLeftMax?
                     locNode->subLeftMax = locNode->parent->subRightMax;
                     //XXX: What is this, I don't even?
                     //     locNode->parent->subRightMax should be the max of the subtree
