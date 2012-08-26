@@ -529,8 +529,10 @@ int avlRemoveNode(avl * tree, avlNode *locNode, avlNode *delNode, char freeNodeM
 
                 locNode->subLeftMax = locNode->parent->subRightMax;
                 locNode->parent->left->subRightMax = locNode->parent->subLeftMax;
+
                 locNode->parent->subRightMax = -INFINITY;
                 locNode->parent->subLeftMax = -INFINITY;
+                avlUpdateMaxScores(locNode->parent);
 
                 return -1;
             }
