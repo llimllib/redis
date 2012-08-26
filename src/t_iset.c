@@ -764,7 +764,7 @@ void genericStabCommand(redisClient *c, robj *lscoreObj, robj *rscoreObj, int in
         checkType(c,iobj,REDIS_ISET)) return;
 
     tree = (avl *) (iobj->ptr);
-    resnode = avlStab(((avl *) (iobj->ptr))->root, lscore, rscore, NULL);
+    resnode = avlStab(tree->root, lscore, rscore, NULL);
 
     /* No results. */
     if (resnode == NULL) {
@@ -911,5 +911,6 @@ void iremCommand(redisClient *c) {
         signalModifiedKey(c->db,key);
         server.dirty += deleted;
     }
+
     addReplyLongLong(c,deleted);
 }
