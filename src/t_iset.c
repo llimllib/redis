@@ -83,6 +83,7 @@ int avlNodeCmp(avlNode *a, avlNode *b) {
 void avlLeftRotation(avl * tree, avlNode *locNode) {
     avlNode *newRoot = locNode->right;
     locNode->right = newRoot->left;
+    if (locNode->right) locNode->right->parent = locNode;
     newRoot->left = locNode;
 
     newRoot->parent = locNode->parent;
@@ -102,6 +103,7 @@ void avlLeftRotation(avl * tree, avlNode *locNode) {
 void avlRightRotation(avl * tree, avlNode *locNode) {
     avlNode *newRoot = locNode->left;
     locNode->left = newRoot->right;
+    if (locNode->left) locNode->left->parent = locNode;
     newRoot->right = locNode;
 
     newRoot->parent = locNode->parent;
