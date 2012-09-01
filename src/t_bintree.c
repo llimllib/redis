@@ -1,5 +1,12 @@
 #include "redis.h"
 
 void bsetCommand(redisClient *c) {
-    addReply(c, shared.ok);
+    robj *key = c->argv[1];
+
+    if (c->argc != 4) {
+        addReply(c,shared.syntaxerr);
+        return;
+    }
+
+    addReply(c,shared.ok);
 }
