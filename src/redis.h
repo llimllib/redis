@@ -1211,6 +1211,7 @@ void hkeysCommand(redisClient *c);
 void hvalsCommand(redisClient *c);
 void hgetallCommand(redisClient *c);
 void hexistsCommand(redisClient *c);
+void bsetCommand(redisClient *c);
 void configCommand(redisClient *c);
 void hincrbyCommand(redisClient *c);
 void hincrbyfloatCommand(redisClient *c);
