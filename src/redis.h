@@ -396,6 +396,18 @@ typedef struct zset {
     zskiplist *zsl;
 } zset;
 
+/* BTREE Binary Tree Struct */
+typedef struct bintreeNode {
+    robj *obj;
+    double value;
+    struct bintreeNode *left, *right;
+} bintreeNode;
+
+typedef struct bintree {
+    struct bintreeNode *root;
+    unsigned long size;
+} bintree;
+
 typedef struct clientBufferLimitsConfig {
     unsigned long long hard_limit_bytes;
     unsigned long long soft_limit_bytes;
