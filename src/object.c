@@ -104,6 +104,19 @@ robj *createHashObject(void) {
     return o;
 }
 
+robj *createBintreeObject(void) {
+    bintree *bt = zmalloc(sizeof(*bt));
+    robj *o;
+
+    bt->root = NULL;
+    bt->size = 0;
+
+    o = createObject(REDIS_BINTREE,bt);
+    o->encoding = REDIS_ENCODING_BINTREE;
+
+    return o;
+}
+
 robj *createZsetObject(void) {
     zset *zs = zmalloc(sizeof(*zs));
     robj *o;
